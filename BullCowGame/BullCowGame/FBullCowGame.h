@@ -1,16 +1,42 @@
 #pragma once
 #include <string>
 
-class FBullCowGame {
-public:
-	int GetMaxTries() const;
-	int GetCurrentTry() const;
+using FString = std::string;
+using int32 = int;
 
-	void Reset(); // TODO make a more rich return value
-	bool IsGameWon();
-	bool CheckGuessValidity(std::string);
+struct FBullCowCount 
+{
+	int32 Bulls = 0;
+	int32 Cows = 0;
+};
+
+enum class EWordStatus 
+{
+	OK,
+	Not_Isogram
+};
+
+class FBullCowGame 
+{
+public:
+	FBullCowGame(); // constructor
+
+	int32 GetMaxTries() const;
+	int32 GetCurrentTry() const;
+	int32 GetHiddenWordLength() const;
+	bool IsGameWon() const;
+	EWordStatus CheckGuessValidity(FString) const; // TODO make a more rich return value	
+
+
+	void Reset(); // TODO make a more rich return value	
+	
+	
+	// count bulls & cows, and increasing try # assuming valid guess
+	FBullCowCount SubmitGuess(FString);
 
 private:
-	int MyCurrentTry = 1;
-	int MyMaxTries = 5;
+	// see constructor for initialization
+	int32 MyCurrentTry;
+	int32 MyMaxTries;
+	FString MyHiddenWord;
 };
